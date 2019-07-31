@@ -8,14 +8,9 @@
 	<Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List Users"
+        android:text="Go to Home"
         android:id="@+id/btn_list_users" />
 
-	<ListView
-		android:minWidth="25px"
-		android:minHeight="25px"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/listView1" />
+	
 
 </RelativeLayout>
