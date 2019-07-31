@@ -11,6 +11,7 @@ using System;
 using Project.Model;
 using Project.Api;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Project
 {
@@ -20,9 +21,14 @@ namespace Project
         ListView listView;
         ArrayAdapter listAdapter;
 
-        IGitHubApi gitHubApi;
-        List<User> users = new List<User>();
+       
+        INewsApi newsApi;
+       
+        List<News> news = new List<News>();
+
         List<string> user_names = new List<string>();
+        List<string> news_title = new List<string>();
+
         Button buttonGet;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -48,7 +54,7 @@ namespace Project
                 Converters = { new StringEnumConverter() }
             };
 
-            gitHubApi = RestService.For<IGitHubApi>("https://api.github.com");
+            newsApi = RestService.For<INewsApi>("https://android-lambton-api.herokuapp.com");
 
             buttonGet = FindViewById<Button>(Resource.Id.btn_list_users);
             buttonGet.Click += buttongGetEventAsync;
@@ -62,21 +68,24 @@ namespace Project
 
         private void buttongGetEventAsync(object sender, EventArgs e)
         {
-            getUsersAsync();
+            
+            getNewsAsync();
+
         }
 
-        private async Task getUsersAsync()
+        
+        private async Task getNewsAsync()
         {
             try
             {
-                ApiResponse response = await gitHubApi.GetUser();
-                users = response.items;
+                ApiNewsResponse response = await newsApi.GetNews();
+                news = response.articles;
 
-                foreach (User user in users)
+                foreach (News newsItem in news)
                 {
-                    user_names.Add(user.ToString());
+                    news_title.Add(newsItem.ToString());
                 }
-                listAdapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItem1, user_names);
+                listAdapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItem1, news_title);
                 listView.Adapter = listAdapter;
             }
             catch (Exception ex)
