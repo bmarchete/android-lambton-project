@@ -62,11 +62,14 @@
     <Compile Include="Adapters\NewsListAdapter.cs" />
     <Compile Include="Api\ApiNewsResponse.cs" />
     <Compile Include="Api\INewsApi.cs" />
+    <Compile Include="DBHelper.cs" />
     <Compile Include="Home.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Model\News.cs" />
+    <Compile Include="Register.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="WebViewActivity.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +128,34 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\web_view.axml">
       <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\mainPageLayout.axml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\registerLayout.axml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\FragMainNews.axml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\FragFavNews.axml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\FragUserInfo.axml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:gravity="center">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7AC5CD"
+        android:layout_weight="3"
+        android:gravity= "center_horizontal">
+
+
+        <TextView
+            android:gravity= "center_horizontal"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:text="My News"
+            android:textSize="50dp"
+            android:textColor="#FFFFFF"
+		/>
+        
+    </LinearLayout>
+	<LinearLayout
+		android:id="@+id/SigninForm"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+        android:layout_margin="10dp"
+		android:background="#FFFFFf"
+		android:layout_weight="1"
+		android:gravity= "center_horizontal">
+		
+        <TextView
+            android:text="Email"
+            android:layout_width="300dp"
+            android:layout_height="18dp"
+            android:textColor="#7AC5CD"
+		/>
+		<EditText
+			android:id="@+id/Email"
+			android:hint="Email"
+			android:background="#f4f5f7"
+			android:layout_width="300dp"
+			android:layout_height="40dp"
+			android:layout_marginBottom="5dp"
+		/>
+        <TextView
+            android:text="Password"
+            android:layout_width="300dp"
+            android:layout_height="18dp"
+            android:textColor="#7AC5CD"
+		/>
+        <EditText
+			android:id="@+id/Password"
+			android:hint="Password"
+			android:background="#f4f5f7"
+			android:layout_width="300dp"
+			android:layout_height="40dp"
+			android:layout_marginBottom="5dp"
+		/>
+        <TextView
+            android:text="Name"
+            android:layout_width="300dp"
+            android:layout_height="18dp"
+            android:textColor="#7AC5CD"
+		/>
+		<EditText
+			android:id="@+id/Name"
+			android:hint="Name"
+			android:background="#f4f5f7"
+			android:layout_width="300dp"
+			android:layout_height="40dp"
+			android:layout_marginBottom="5dp"
+		/>
+        <TextView
+            android:text="Age"
+            android:layout_width="300dp"
+            android:layout_height="18dp"
+            android:textColor="#7AC5CD"
+		/>
+		<EditText
+			android:id="@+id/Age"
+			android:hint="Age"
+			android:background="#f4f5f7"
+			android:layout_width="300dp"
+			android:layout_height="40dp"
+			android:layout_marginBottom="5dp"
+		/>
+		<TextView
+            android:text="Phone number"
+            android:layout_width="300dp"
+            android:layout_height="18dp"
+            android:textColor="#7AC5CD"
+		/>
+		<EditText
+			android:id="@+id/Phone"
+			android:hint="Phone number"
+			android:background="#f4f5f7"
+			android:layout_width="300dp"
+			android:layout_height="40dp"
+			android:layout_marginBottom="5dp"
+		/>
+		<Button
+			android:id="@+id/SignIn"
+			android:background="#7AC5CD"
+			android:textColor="#FFFFFf"
+			android:layout_width="100dp"
+			android:layout_height="30dp"
+			android:layout_margin="15dp"
+			android:text="Sign In"
+		/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#7AC5CD"
+		android:layout_weight="3"
+		android:gravity= "center_horizontal">
+
+		<TextView 
+			android:text="Already a member?"
+			android:textColor="#FFFFFF"
+			android:textSize="15dp"
+			android:layout_width="300dp"
+			android:layout_height="30dp"
+			android:layout_marginTop="5dp"
+			android:gravity= "center_horizontal"
+		/>
+		<Button
+			android:id="@+id/Login"
+			android:background="#FFFFFf"
+			android:textColor="#7AC5CD"
+			android:layout_width="100dp"
+			android:layout_height="30dp"
+			android:text="Login"
+		/>
+	</LinearLayout>
+
+</LinearLayout>
