@@ -32,7 +32,7 @@ namespace Project
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+
             SetContentView(Resource.Layout.activity_main);
 
             username = FindViewById<EditText>(Resource.Id.UserName);
@@ -46,12 +46,10 @@ namespace Project
                 Intent registerPage = new Intent(this, typeof(Register));
                 StartActivity(registerPage);
             };
-
-            //buttonGet = FindViewById<Button>(Resource.Id.btn_list_users);
-            //buttonGet.Click += buttongGetEventAsync;
         }
 
-        void ButtonClick(object sender, System.EventArgs e)
+       
+        private void ButtonClick(object sender, System.EventArgs e)
         {
             Dialog myDialog;
             ViewGroup form = (ViewGroup)FindViewById(Resource.Id.LoginForm);
@@ -79,7 +77,7 @@ namespace Project
             else
             {
                 Intent mainPage = new Intent(this, typeof(MainPage));
-                mainPage.PutExtra("userName", username.Text);
+                util.setPref(this, "userLogged", username.Text);
                 StartActivity(mainPage);
             }
         }

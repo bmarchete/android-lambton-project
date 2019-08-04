@@ -16,24 +16,21 @@ namespace Project
 {
     public class FragUserInfo : Fragment
     {
-        string userLogged = "a";
+        string userLogged;
         bool updateDisplay = false;
         Button updateButton;
         View myView;
+        Util util = new Util();
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            //userLogged = savedInstanceState.GetString();
-            // Create your fragment here
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
-            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
             myView = inflater.Inflate(Resource.Layout.FragUserInfoLayout, container, false);
-            //userLogged = 
+            userLogged = util.getPref(myView.Context, "userLogged");
 
             userInfo();
 

@@ -42,11 +42,6 @@ namespace Project
                 myDialog = util.CreateButton(this, "Attention", "All fields must be filled");
                 myDialog.Show();
             }
-            //else if (!validatePassword())
-            //{
-            //    myDialog = util.CreateButton(this, "Attention", "Passwords don't match");
-            //    myDialog.Show();
-            //}
             else
             {
                 if (regUser())

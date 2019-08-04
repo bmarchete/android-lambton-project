@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Preferences;
 using Android.Views;
 using Android.Widget;
 
@@ -41,6 +42,24 @@ namespace Project
         private void CancelAction(object sender, DialogClickEventArgs e)
         {
             System.Console.WriteLine("Cancel Button Cliked");
+        }
+
+        public void setPref(Context context,string key, string value)
+        {
+            ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(context);
+            ISharedPreferencesEditor editor = prefs.Edit();
+            editor.PutString(key, value);
+            // editor.Commit();    // applies changes synchronously on older APIs
+            editor.Apply();        // applies changes asynchronously on newer APIs
+
+        }
+
+        public string getPref(Context context, string key)
+        {
+            ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(context);
+            string mString = prefs.GetString(key, "empty");
+
+            return mString;
         }
     }
 }
