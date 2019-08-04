@@ -78,9 +78,9 @@ namespace Project
             }
             else
             {
-                Intent welcomePage = new Intent(this, typeof(Home));
-                welcomePage.PutExtra("userName", username.Text);
-                StartActivity(welcomePage);
+                Intent mainPage = new Intent(this, typeof(MainPage));
+                mainPage.PutExtra("userName", username.Text);
+                StartActivity(mainPage);
             }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

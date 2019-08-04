@@ -60,7 +60,7 @@ namespace Project.Adapters
 
                 //replace with your item and your holder items
                 //comment back in
-                view = inflater.Inflate(Resource.Layout.news_custom_list, parent, false);
+                view = inflater.Inflate(Resource.Layout.ListMainNews, parent, false);
                 //holder.Code = view.FindViewById<TextView>(Resource.Id.textViewCourseCode);
                 //holder.Name = view.FindViewById<TextView>(Resource.Id.textViewCourseName);
                 //holder.Thumbnail = view.FindViewById<ImageView>(Resource.Id.imageViewCourse);
@@ -71,13 +71,13 @@ namespace Project.Adapters
                 //holder.Thumbnail.SetImageResource(course.Thumbnail);
 
                 holder.Title = view.FindViewById<TextView>(Resource.Id.textViewTitle);
-                holder.Description = view.FindViewById<TextView>(Resource.Id.textViewDescription);
+                //holder.Description = view.FindViewById<TextView>(Resource.Id.textViewDescription);
                 //holder.Description = view.FindViewById<TextView>(Resource.Id.textViewMore);
                 holder.Thumbnail = view.FindViewById<ImageView>(Resource.Id.imageView);
 
 
                 holder.Title.Text = news.title;
-                holder.Description.Text = news.description;
+                //holder.Description.Text = news.description;
                 //holder.Description.Text = news.description;
 
                 var imageBitmap = GetImageBitmapFromUrl(news.urlToImage);

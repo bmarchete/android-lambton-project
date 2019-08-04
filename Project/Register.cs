@@ -76,7 +76,15 @@ namespace Project
             }
             else
             {
-                myDB.insertUser(email.Text, password.Text, name.Text, age.Text, phone.Text);
+                var userInfo = new Dictionary<string, string>
+                {
+                    { "EMAIL", email.Text },
+                    { "PASSWORD", password.Text },
+                    { "NAME", name.Text },
+                    { "AGE", age.Text },
+                    { "PHONE", phone.Text }
+                };
+                myDB.insertSQL(userInfo, "USERS");
                 return true;
             }
         }

@@ -2,95 +2,140 @@
 using Android.Content;  // Step: 1 - 0
 using Android.Database.Sqlite; // Step: 1 - 1
 using Android.Database;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Project
 {
     public class DBHelper : SQLiteOpenHelper  // Step: 1 - 2 // Class that you need extend 
     {
 
-        //Step: 1 - 3:
         private static string _DatabaseName = "mydatabase.db";
-        private const string TableName = "USERS";
-
-        public const string CreateUserTableQuery = "CREATE TABLE " +
-        TableName + " (" +
+        
+        public const string CreateUserTableQuery = "CREATE TABLE USERS (" +
             "EMAIL TEXT," +
             "PASSWORD TEXT," +
             "NAME TEXT," +
             "AGE TEXT," +
-            "PHONE TEXT)";  //Step: 1 - 4
+            "PHONE TEXT)";
 
-        SQLiteDatabase myDBObj; // Step: 1 - 5
-        Context myContext; // Step: 1 - 6
+        public const string CreateNewsTableQuery = "CREATE TABLE NEWS (" +
+            "EMAIL TEXT," +
+            "TITLE TEXT," +
+            "IMAGE TEXT," +
+            "CONTENT TEXT)";
 
-        public DBHelper(Context context) : base(context, name: _DatabaseName, factory: null, version: 1) //Step 2;
+        SQLiteDatabase myDBObj;
+        Context myContext;
+
+        public DBHelper(Context context) : base(context, name: _DatabaseName, factory: null, version: 1) 
         {
             myContext = context;
-            myDBObj = WritableDatabase; // Step:3 create a DB objects
+            myDBObj = WritableDatabase;
             //myDBObj.ExecSQL("DROP TABLE USER");
             //myDBObj.ExecSQL(CreateUserTableQuery);
         }
 
-        public override void OnCreate(SQLiteDatabase db)  // Step: 1 - 2:1
+        public override void OnCreate(SQLiteDatabase db)
         {
-            db.ExecSQL(CreateUserTableQuery);  // Step: 4
+            db.ExecSQL(CreateUserTableQuery);
+            db.ExecSQL(CreateNewsTableQuery);
         }
 
-        public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) // Step: 1 - 2:2
+        public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
             throw new NotImplementedException();
         }
 
-        public void insertUser(string email, string password, string name, string age, string phone)
+        public void insertSQL(Dictionary<string, string> insertArray, string table)
         {
-            string insertSQL = "insert into " + TableName + " values ("
-                + "'" + email + "'" + ","
-                + "'" + password + "'" + ","
-                + "'" + name + "'" + ","
-                + "'" + age + "'" + ","
-                + "'" + phone + "'" + ");";
-
-            System.Console.WriteLine("Insert SQL " + insertSQL);
-            myDBObj.ExecSQL(insertSQL);
+            string insertStr = "INSERT INTO " + table + " VALUES (";
+            int count = 0;
+            foreach (var i in insertArray)
+            {
+                if (count < insertArray.Count - 1)
+                {
+                    insertStr += "'" + i.Value + "'" + ", ";
+                    count++;
+                }
+                else
+                {
+                    insertStr += "'" + i.Value + "'" + ");";
+                }
+            }
+            System.Console.WriteLine(insertStr);
+            myDBObj.ExecSQL(insertStr);
         }
 
-        public void updateUser(string email, string password, string name, string age, string phone)
+        public void updateSQL(Dictionary<string, string> updateArray, string table, Dictionary<string, string> whereClause)
         {
-            string updateSQL = "update " + TableName + " set "
-                + "PASSWORD = '" + password + "'" + ", "
-                + "NAME = '" + name + "'" + ", "
-                + "AGE = '" + age + "'" + ", "
-                + "PHONE = '" + password + "' "
-                + "where EMAIL = '" + email + "';";
-
-            System.Console.WriteLine("UPDATE SQL " + updateSQL);
-            myDBObj.ExecSQL(updateSQL);
+            string updateStr = "UPDATE " + table + " SET ";
+            int count = 0;
+            foreach (var i in updateArray)
+            {
+                if (count < updateArray.Count - 1)
+                {
+                    updateStr += i.Key +" = '" + i.Value + "'" + ", ";
+                    count++;
+                }
+                else
+                {
+                    updateStr += i.Key + " = '" + i.Value + "'";
+                }
+            }
+            count = 0;
+            updateStr += "WHERE ";
+            foreach (var i in whereClause)
+            {
+                if (count < whereClause.Count - 1)
+                {
+                    updateStr += i.Key + " = '" + i.Value + "'" + ", ";
+                    count++;
+                }
+                else
+                {
+                    updateStr += i.Key + " = '" + i.Value + "'";
+                }
+            }
+            System.Console.WriteLine(updateStr);
+            myDBObj.ExecSQL(updateStr);
         }
 
-        public void deleteRecordById(string email)
+        public void deleteSQL(string table, Dictionary<string, string> whereClause)
         {
-            string myDelete = "delete from " + TableName + "where email=" + email;
-            myDBObj.ExecSQL(myDelete);
+            string updateStr = "DELETE FROM " + table + " WHERE ";
+            int count = 0;
+            foreach (var i in whereClause)
+            {
+                if (count < whereClause.Count - 1)
+                {
+                    updateStr += i.Key + " = '" + i.Value + "'" + ", ";
+                    count++;
+                }
+                else
+                {
+                    updateStr += i.Key + " = '" + i.Value + "'";
+                }
+            }
+            System.Console.WriteLine(updateStr);
+            myDBObj.ExecSQL(updateStr);
         }
-
 
         public bool checkEmailIDExisit(string email)
         {
-            string selectStm = "Select EMAIL from " + TableName + " where EMAIL=" + "'" + email + "'";
-            Console.WriteLine(selectStm);
-            ICursor result = myDBObj.RawQuery(selectStm, null);
-
-            if (result.Count > 0)
-                return true;
-            else
-                return false;
+            string selectStm = "Select EMAIL from USERS where EMAIL=" + "'" + email + "'";
+            return checkStatement(selectStm);
         }
 
         public bool checkLogin(string username, string password)
         {
-            string selectStm = "Select EMAIL from " + TableName + " where EMAIL=" + "'" + username + "' and PASSWORD = '" + password + "'";
-            ICursor result = myDBObj.RawQuery(selectStm, null);
+            string selectStm = "Select EMAIL from USERS where EMAIL=" + "'" + username + "' and PASSWORD = '" + password + "'";
+            return checkStatement(selectStm);
+        }
 
+        public bool checkStatement(string selectStm)
+        {
+            ICursor result = myDBObj.RawQuery(selectStm, null);
             if (result.Count > 0)
                 return true;
             else
@@ -99,22 +144,20 @@ namespace Project
 
         public ICursor selectUser(string email)
         {
-            string selectStm = "Select PASSWORD, NAME, AGE, PHONE from " + TableName + " where EMAIL=" + "'" + email + "'";
-            ICursor result = myDBObj.RawQuery(selectStm, null);
-            result.MoveToFirst();
-
-            if (result.Count > 0)
-                return result;
-            else
-                return null;
+            string selectStm = "Select NAME, AGE, PHONE, PASSWORD from USERS where EMAIL=" + "'" + email + "'";
+            return returnStatement(selectStm);
         }
 
         public ICursor selectAllUsers()
         {
-            string selectStm = "Select EMAIL, PASSWORD, NAME, AGE, PHONE from " + TableName;
+            string selectStm = "Select EMAIL, PASSWORD, NAME, AGE, PHONE from USERS";
+            return returnStatement(selectStm);
+        }
+
+        public ICursor returnStatement(string selectStm)
+        {
             ICursor result = myDBObj.RawQuery(selectStm, null);
             result.MoveToFirst();
-
             if (result.Count > 0)
                 return result;
             else
