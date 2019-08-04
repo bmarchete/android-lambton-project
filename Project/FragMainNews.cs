@@ -23,10 +23,16 @@ namespace Project
 {
     public class FragMainNews : Fragment
     {
-        ListView newsListView;
         SearchView newsSearchView;
+        ListView newsListView;
         List<News> newsList = new List<News>();
         INewsApi newsApi;
+        View myView;
+        Button favNewsBtn;
+        Button openNewsBtn;
+        Util util = new Util();
+        string userLogged;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -35,7 +41,8 @@ namespace Project
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            View myView = inflater.Inflate(Resource.Layout.FragMainNewsLayout, container, false);
+            myView = inflater.Inflate(Resource.Layout.FragMainNewsLayout, container, false);
+            userLogged = util.getPref(myView.Context, "userLogged");
 
             newsListView = myView.FindViewById<ListView>(Resource.Id.listViewHomeNews);
             newsSearchView = myView.FindViewById<SearchView>(Resource.Id.searchViewHomeNews);
@@ -69,6 +76,27 @@ namespace Project
             {
                 Toast.MakeText(this.Context, ex.StackTrace, ToastLength.Long).Show();
             }
+        }
+
+        private void favNewsBtnClick(object sender, System.EventArgs e)
+        {
+
+            
+            TextView title = myView.FindViewById<TextView>(Resource.Id.textViewTitle);
+            TextView newsURL = myView.FindViewById<TextView>(Resource.Id.TxtNewsURL);
+            TextView imageURL = myView.FindViewById<TextView>(Resource.Id.TxtImageURL);
+            
+            var favNews = new Dictionary<string, string>
+            {
+                { "EMAIL", userLogged},
+                { "TITLE", title.Text },
+                { "NEWSURL", newsURL.Text },
+                { "IMAGEURL", imageURL.Text }
+            };
+
+            DBHelper myDB = new DBHelper(myView.Context);
+            myDB.insertSQL(favNews, "NEWS");
+            
         }
     }
 }

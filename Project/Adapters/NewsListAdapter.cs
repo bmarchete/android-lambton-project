@@ -24,9 +24,7 @@ namespace Project.Adapters
         {
             this.context = context;
             this.newsList = userList;
-
         }
-
 
         public override Java.Lang.Object GetItem(int position)
         {
@@ -42,9 +40,7 @@ namespace Project.Adapters
         {
             var view = convertView;
 
-
             NewsListAdapterViewHolder holder = null;
-
 
             if (view != null)
                 holder = view.Tag as NewsListAdapterViewHolder;
@@ -70,13 +66,20 @@ namespace Project.Adapters
                 //holder.Name.Text = course.Name;
                 //holder.Thumbnail.SetImageResource(course.Thumbnail);
 
-                holder.Title = view.FindViewById<TextView>(Resource.Id.textViewTitle);
+                holder.Title = view.FindViewById<TextView>(Resource.Id.txtTitle);
+                holder.NewsURL = view.FindViewById<TextView>(Resource.Id.TxtNewsURL);
+                holder.ImageURL = view.FindViewById<TextView>(Resource.Id.TxtImageURL);
+                holder.BtnFavNews = view.FindViewById<Button>(Resource.Id.BtnFavNews);
+                holder.BtnOpenNews = view.FindViewById<Button>(Resource.Id.BtnOpenNews);
                 //holder.Description = view.FindViewById<TextView>(Resource.Id.textViewDescription);
                 //holder.Description = view.FindViewById<TextView>(Resource.Id.textViewMore);
                 holder.Thumbnail = view.FindViewById<ImageView>(Resource.Id.imageView);
 
 
                 holder.Title.Text = news.title;
+                holder.NewsURL.Text = news.url;
+                holder.ImageURL.Text = news.urlToImage;
+
                 //holder.Description.Text = news.description;
                 //holder.Description.Text = news.description;
 
@@ -132,9 +135,12 @@ namespace Project.Adapters
     {
 
         public TextView Title { get; set; }
+        public TextView NewsURL { get; set; }
+        public TextView ImageURL { get; set; }
         public TextView FirstName { get; set; }
         public TextView Description { get; set; }
-        
         public ImageView Thumbnail { get; set; }
+        public Button BtnFavNews { get; set; }
+        public Button BtnOpenNews { get; set; }
     }
 }

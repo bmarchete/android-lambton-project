@@ -51,15 +51,16 @@ namespace Project
             editor.PutString(key, value);
             // editor.Commit();    // applies changes synchronously on older APIs
             editor.Apply();        // applies changes asynchronously on newer APIs
-
         }
 
         public string getPref(Context context, string key)
         {
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(context);
-            string mString = prefs.GetString(key, "empty");
+            string mString = prefs.GetString(key, "");
 
             return mString;
         }
+
+
     }
 }

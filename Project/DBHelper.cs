@@ -22,8 +22,8 @@ namespace Project
         public const string CreateNewsTableQuery = "CREATE TABLE NEWS (" +
             "EMAIL TEXT," +
             "TITLE TEXT," +
-            "IMAGE TEXT," +
-            "CONTENT TEXT)";
+            "NEWSURL TEXT," +
+            "IMAGEURL TEXT)";
 
         SQLiteDatabase myDBObj;
         Context myContext;

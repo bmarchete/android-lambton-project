@@ -38,6 +38,30 @@ namespace Project
             AddTabToActionBar("User Info"); //Second Tab
         }
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            // set the menu layout on Main Activity  
+            MenuInflater.Inflate(Resource.Menu.menu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.logout:
+                    {
+                        var util = new Util();
+                        util.setPref(this, "userLogged", "");
+                        Intent loginPage = new Intent(this, typeof(MainActivity));
+                        StartActivity(loginPage);
+                        return true;
+                    }
+            }
+
+            return base.OnOptionsItemSelected(item);
+        }
+
         void AddTabToActionBar(string tabTitle)
         {
             ActionBar.Tab tab = ActionBar.NewTab();
