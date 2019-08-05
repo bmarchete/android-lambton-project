@@ -32,6 +32,8 @@ namespace Project
         Button openNewsBtn;
         Util util = new Util();
         string userLogged;
+        ProgressBar progressBarSpinner;
+        LinearLayout mainNewsLayout;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,6 +48,10 @@ namespace Project
 
             newsListView = myView.FindViewById<ListView>(Resource.Id.listViewHomeNews);
             newsSearchView = myView.FindViewById<SearchView>(Resource.Id.searchViewHomeNews);
+            progressBarSpinner = myView.FindViewById<ProgressBar>(Resource.Id.progressBar1);
+            mainNewsLayout = myView.FindViewById<LinearLayout>(Resource.Id.mainNewsLayout);
+
+            //spinner.Progress
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
             {
@@ -71,6 +77,8 @@ namespace Project
                 newsList = response.articles;
                 var myAdapter = new NewsListAdapter(this.Context, newsList);
                 newsListView.Adapter = myAdapter;
+                progressBarSpinner.Visibility = ViewStates.Invisible;
+                mainNewsLayout.RemoveView(progressBarSpinner);
             }
             catch (Exception ex)
             {
