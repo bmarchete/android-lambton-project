@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#7AC5CD"
+        android:background="#333333"
         android:layout_weight="1"
         android:gravity= "center_horizontal"
         >
@@ -20,9 +20,10 @@
         <TextView 
 			android:text="Nome:"
 			android:layout_width="300dp"
-			android:layout_height="18dp"
-			android:textColor="#FFFFFF"
-            android:layout_marginTop="50dp"
+            android:layout_height="18dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
 		/>
 		
 		<EditText
@@ -30,7 +31,7 @@
 			android:background="#f4f5f7"
 			android:layout_width="300dp"
 			android:layout_height="40dp"
-			android:layout_margin="5dp"
+			android:layout_marginBottom="5dp"
 			android:hint="Nome"
             android:enabled="false"
 		/>
@@ -38,8 +39,9 @@
 		<TextView 
 			android:text="Age:"
 			android:layout_width="300dp"
-			android:layout_height="18dp"
-			android:textColor="#FFFFFF"
+            android:layout_height="18dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="5dp"
 		/>
 		
 		<EditText
@@ -47,7 +49,7 @@
 			android:background="#f4f5f7"
 			android:layout_width="300dp"
 			android:layout_height="40dp"
-			android:layout_margin="5dp"
+			android:layout_marginBottom="5dp"
 			android:hint="Age"
             android:enabled="false"
 		/>
@@ -55,8 +57,9 @@
         <TextView 
 			android:text="Phone number:"
 			android:layout_width="300dp"
-			android:layout_height="18dp"
-			android:textColor="#FFFFFF"
+            android:layout_height="18dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="5dp"
 		/>
 		
 		<EditText
@@ -64,7 +67,7 @@
 			android:background="#f4f5f7"
 			android:layout_width="300dp"
 			android:layout_height="40dp"
-			android:layout_margin="5dp"
+			android:layout_marginBottom="5dp"
 			android:hint="Phone"
             android:enabled="false"
 		/>
@@ -72,8 +75,9 @@
         <TextView 
 			android:text="Password:"
 			android:layout_width="300dp"
-			android:layout_height="18dp"
-			android:textColor="#FFFFFF"
+            android:layout_height="18dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="5dp"
 		/>
 		
 		<EditText
@@ -81,7 +85,7 @@
 			android:background="#f4f5f7"
 			android:layout_width="300dp"
 			android:layout_height="40dp"
-			android:layout_margin="5dp"
+			android:layout_marginBottom="20dp"
 			android:hint="Password"
             android:password="true"
             android:enabled="false"
@@ -90,11 +94,10 @@
         <Button
 			android:id="@+id/Update"
 			android:text="Update"
-			android:textColor="#7AC5CD"
-			android:background="#FFFFFF"
-			android:layout_width="100dp"
-			android:layout_height="30dp"
-			android:layout_margin="15dp"
+			android:background="#595959"
+			android:textColor="#FFFFFf"
+			android:layout_width="300dp"
+            android:layout_height="50dp"
 		/>
 
     </LinearLayout>

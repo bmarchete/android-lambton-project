@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#7AC5CD"
+        android:background="#333333"
         android:layout_weight="3"
         android:gravity= "center_horizontal">
 
@@ -31,7 +31,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#7AC5CD"
+        android:background="#333333"
         android:layout_weight="1"
         android:gravity= "center_horizontal"
         >
@@ -69,7 +69,7 @@
         <Button
             android:id="@+id/Login"
             android:text="Login"
-            android:background="#B4EEB4"
+            android:background="#595959"
             android:textColor="#FFFFFF"
             android:layout_width="300dp"
             android:layout_height="50dp"
@@ -86,21 +86,22 @@
 		android:gravity= "center_horizontal">
 
 		<TextView 
-			android:text="NOT A MEMBER YET?."
-			android:textColor="#7AC5CD"
+			android:text="NOT A MEMBER YET ?."
+			android:textColor="#333333"
 			android:textSize="15dp"
 			android:layout_width="300dp"
-			android:layout_height="30dp"
+			android:layout_height="20dp"
 			android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
 			android:gravity= "center_horizontal"
 		/>
 		<Button
 			android:id="@+id/SignIn"
 			android:text="Sign In"
-			android:background="#7AC5CD"
+			android:background="#595959"
 			android:textColor="#FFFFFf"
-			android:layout_width="100dp"
-			android:layout_height="30dp"
+			android:layout_width="180dp"
+			android:layout_height="40dp"
 		/>
 	</LinearLayout>
 

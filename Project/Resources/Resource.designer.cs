@@ -3241,9 +3241,6 @@ namespace Project
 			// aapt resource value: 0x7f0a0039
 			public const int ALT = 2131361849;
 			
-			// aapt resource value: 0x7f0a00df
-			public const int Age = 2131362015;
-			
 			// aapt resource value: 0x7f0a00c2
 			public const int AuthorName = 2131361986;
 			
@@ -3253,14 +3250,17 @@ namespace Project
 			// aapt resource value: 0x7f0a00ca
 			public const int BtnFavNews = 2131361994;
 			
+			// aapt resource value: 0x7f0a00df
+			public const int BtnLogin = 2131362015;
+			
 			// aapt resource value: 0x7f0a00b6
 			public const int BtnOpenNews = 2131361974;
 			
+			// aapt resource value: 0x7f0a00de
+			public const int BtnSignIn = 2131362014;
+			
 			// aapt resource value: 0x7f0a003a
 			public const int CTRL = 2131361850;
-			
-			// aapt resource value: 0x7f0a00dd
-			public const int Email = 2131362013;
 			
 			// aapt resource value: 0x7f0a003b
 			public const int FUNCTION = 2131361851;
@@ -3274,14 +3274,8 @@ namespace Project
 			// aapt resource value: 0x7f0a003c
 			public const int META = 2131361852;
 			
-			// aapt resource value: 0x7f0a00de
-			public const int Name = 2131362014;
-			
 			// aapt resource value: 0x7f0a009f
 			public const int Password = 2131361951;
-			
-			// aapt resource value: 0x7f0a00e0
-			public const int Phone = 2131362016;
 			
 			// aapt resource value: 0x7f0a00c1
 			public const int PostAvatar = 2131361985;
@@ -3309,6 +3303,9 @@ namespace Project
 			
 			// aapt resource value: 0x7f0a00bb
 			public const int TxtAge = 2131361979;
+			
+			// aapt resource value: 0x7f0a00dd
+			public const int TxtEmail = 2131362013;
 			
 			// aapt resource value: 0x7f0a00c9
 			public const int TxtImageURL = 2131361993;
@@ -3613,11 +3610,11 @@ namespace Project
 			// aapt resource value: 0x7f0a0070
 			public const int list_item = 2131361904;
 			
-			// aapt resource value: 0x7f0a00e4
-			public const int logout = 2131362020;
-			
 			// aapt resource value: 0x7f0a00e3
-			public const int masked = 2131362019;
+			public const int logout = 2131362019;
+			
+			// aapt resource value: 0x7f0a00e2
+			public const int masked = 2131362018;
 			
 			// aapt resource value: 0x7f0a009c
 			public const int message = 2131361948;
@@ -3913,11 +3910,11 @@ namespace Project
 			// aapt resource value: 0x7f0a001b
 			public const int view_offset_helper = 2131361819;
 			
-			// aapt resource value: 0x7f0a00e2
-			public const int visible = 2131362018;
-			
 			// aapt resource value: 0x7f0a00e1
-			public const int webView1 = 2131362017;
+			public const int visible = 2131362017;
+			
+			// aapt resource value: 0x7f0a00e0
+			public const int webView1 = 2131362016;
 			
 			// aapt resource value: 0x7f0a0043
 			public const int withText = 2131361859;

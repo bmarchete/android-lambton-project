@@ -21,8 +21,8 @@ namespace Project
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.registerLayout);
 
-            Button login = FindViewById<Button>(Resource.Id.Login);
-            Button signin = FindViewById<Button>(Resource.Id.SignIn);
+            Button login = FindViewById<Button>(Resource.Id.BtnLogin);
+            Button signin = FindViewById<Button>(Resource.Id.BtnSignIn);
 
             signin.Click += ButtonClick;
             login.Click += delegate
@@ -56,11 +56,11 @@ namespace Project
 
         protected bool regUser()
         {
-            EditText email = FindViewById<EditText>(Resource.Id.Email);
-            EditText password = FindViewById<EditText>(Resource.Id.Password);
-            EditText name = FindViewById<EditText>(Resource.Id.Name);
-            EditText age = FindViewById<EditText>(Resource.Id.Age);
-            EditText phone = FindViewById<EditText>(Resource.Id.Phone);
+            EditText email = FindViewById<EditText>(Resource.Id.TxtEmail);
+            EditText password = FindViewById<EditText>(Resource.Id.TxtPassword);
+            EditText name = FindViewById<EditText>(Resource.Id.TxtName);
+            EditText age = FindViewById<EditText>(Resource.Id.TxtAge);
+            EditText phone = FindViewById<EditText>(Resource.Id.TxtPhone);
 
             DBHelper myDB = new DBHelper(this);
             if (myDB.checkEmailIDExisit(email.Text))
