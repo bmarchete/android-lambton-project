@@ -21,11 +21,12 @@ namespace Project
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.web_view);
+            var url = Intent.GetStringExtra("url");
 
             web_view = FindViewById<WebView>(Resource.Id.webView1);
             web_view.Settings.JavaScriptEnabled = true;
             web_view.SetWebViewClient(new HelloWebViewClient());
-            web_view.LoadUrl("https://www.xamarin.com/university");
+            web_view.LoadUrl(url);
 
 
         }

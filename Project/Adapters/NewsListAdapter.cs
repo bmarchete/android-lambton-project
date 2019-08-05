@@ -67,7 +67,7 @@ namespace Project.Adapters
                 //holder.Thumbnail.SetImageResource(course.Thumbnail);
 
                 holder.Title = view.FindViewById<TextView>(Resource.Id.txtTitle);
-                holder.NewsURL = view.FindViewById<TextView>(Resource.Id.TxtNewsURL);
+                //holder.NewsURL = view.FindViewById<TextView>(Resource.Id.TxtNewsURL);
                 holder.ImageURL = view.FindViewById<TextView>(Resource.Id.TxtImageURL);
                 holder.BtnFavNews = view.FindViewById<Button>(Resource.Id.BtnFavNews);
                 holder.BtnOpenNews = view.FindViewById<Button>(Resource.Id.BtnOpenNews);
@@ -77,15 +77,20 @@ namespace Project.Adapters
 
 
                 holder.Title.Text = news.title;
-                holder.NewsURL.Text = news.url;
+                holder.NewsURL = news.url;
                 holder.ImageURL.Text = news.urlToImage;
+                holder.BtnFavNews.Click += (sender, args) => {
+                    holder.addToFavorite();
+                };
+                holder.BtnOpenNews.Click += (sender, args) => {
+                    holder.openWebVIew(this.context);
+                };
 
                 //holder.Description.Text = news.description;
                 //holder.Description.Text = news.description;
 
                 var imageBitmap = GetImageBitmapFromUrl(news.urlToImage);
                 holder.Thumbnail.SetImageBitmap(imageBitmap);
-
                 view.Tag = holder;
             }
 
@@ -94,6 +99,8 @@ namespace Project.Adapters
 
             return view;
         }
+
+        
 
         private Bitmap GetImageBitmapFromUrl(string url)
         {
@@ -135,12 +142,27 @@ namespace Project.Adapters
     {
 
         public TextView Title { get; set; }
-        public TextView NewsURL { get; set; }
+        public string NewsURL { get; set; }
         public TextView ImageURL { get; set; }
         public TextView FirstName { get; set; }
         public TextView Description { get; set; }
         public ImageView Thumbnail { get; set; }
         public Button BtnFavNews { get; set; }
         public Button BtnOpenNews { get; set; }
+
+
+        public void addToFavorite()
+        {
+            // Here you can create a new DB intance and save the info 
+
+            Toast.MakeText(Application.Context, "title: " + Title.Text, ToastLength.Short).Show();
+        }
+
+        public void openWebVIew(Context context)
+        {
+            Intent webView = new Intent(context, typeof(WebViewActivity));
+            webView.PutExtra("url", NewsURL);
+            context.StartActivity(webView);
+        }
     }
 }
