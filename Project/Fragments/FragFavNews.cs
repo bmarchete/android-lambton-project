@@ -55,7 +55,7 @@ namespace Project
                     searchArray.Add(item);
 
             }
-            newsListView.Adapter = new NewsListAdapter(this.Context, searchArray);
+            newsListView.Adapter = new NewsListAdapter(this.Context, searchArray, this);
         }
 
         private void getNewsDB()
@@ -75,7 +75,7 @@ namespace Project
 
                     result.MoveToNext();
                 }
-                newsListView.Adapter = new NewsListAdapter(this.Context, newsList);
+                newsListView.Adapter = new NewsListAdapter(this.Context, newsList,this);
             }
             catch (Exception ex)
             {

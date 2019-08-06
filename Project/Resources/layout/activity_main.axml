@@ -20,7 +20,7 @@
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_marginBottom="5dp"
-            android:text="My News"
+            android:text="MyNews"
             android:textSize="50dp"
             android:textColor="#FFFFFF"
 		/>

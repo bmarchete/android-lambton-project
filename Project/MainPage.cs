@@ -6,7 +6,7 @@ using Android.Views;
 
 namespace Project
 {
-    [Activity(Label = "News Main Page")]
+    [Activity(Label = "MyNews Main Page")]
     public class MainPage : Activity
     {
         Fragment[] _fragmentsArray;

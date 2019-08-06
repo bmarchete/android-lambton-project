@@ -17,11 +17,19 @@ namespace Project.Adapters
     {
         Context context;
         List<News> newsList;
+        Fragment fragment;
 
         public NewsListAdapter(Context context, List<News> userList)
         {
             this.context = context;
             this.newsList = userList;
+        }
+
+        public NewsListAdapter(Context context, List<News> userList, Fragment fragment)
+        {
+            this.context = context;
+            this.newsList = userList;
+            this.fragment = fragment;
         }
 
         public override Java.Lang.Object GetItem(int position)
@@ -78,8 +86,12 @@ namespace Project.Adapters
                 holder.BtnOpenNews.Click += (sender, args) => {
                     holder.openWebVIew(this.context);
                 };
-                var imageBitmap = GetImageBitmapFromUrl(news.urlToImage);
-                holder.Thumbnail.SetImageBitmap(imageBitmap);
+                if (!string.IsNullOrWhiteSpace(news.urlToImage))
+                {
+                    var imageBitmap = GetImageBitmapFromUrl(news.urlToImage);
+                    holder.Thumbnail.SetImageBitmap(imageBitmap);
+                }
+                holder.fragment = fragment;
 
                 view.Tag = holder;
             }
@@ -134,7 +146,9 @@ namespace Project.Adapters
         public ImageView Thumbnail { get; set; }
         public Button BtnFavNews { get; set; }
         public Button BtnOpenNews { get; set; }
+        public Fragment fragment { get; set; }
 
+        [Obsolete]
         public void btnFavorite()
         {
             DBHelper myDB = new DBHelper(this.context);
@@ -142,6 +156,16 @@ namespace Project.Adapters
             {
                 myDB.deleteSQL("NEWS", new Dictionary<string, string>{{ "EMAIL", Util.getPref(context, "userLogged") },{ "NEWSURL", NewsURL }});
                 Toast.MakeText(Application.Context, "News deleted!", ToastLength.Short).Show();
+
+                if (Build.VERSION.SdkInt >= Build.VERSION_CODES.N)
+                {
+                    fragment.FragmentManager.BeginTransaction().Detach(fragment).CommitNow();
+                    fragment.FragmentManager.BeginTransaction().Attach(fragment).CommitNow();
+                }
+                else
+                {
+                    fragment.FragmentManager.BeginTransaction().Detach(fragment).Attach(fragment).Commit();
+                }
             }
             else
             {
@@ -154,7 +178,7 @@ namespace Project.Adapters
                     var newsInfo = new Dictionary<string, string>
                     {
                         { "EMAIL", Util.getPref(context, "userLogged")},
-                        { "TITLE", Title.Text },
+                        { "TITLE",  Title.Text.Replace("'","") },
                         { "NEWSURL", NewsURL },
                         { "IMAGEURL", ImageURL.Text }
                     };
