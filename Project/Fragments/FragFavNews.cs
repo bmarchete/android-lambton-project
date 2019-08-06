@@ -17,9 +17,9 @@ namespace Project
         ListView newsListView;
         List<News> newsList = new List<News>();
         View myView;
-        string userLogged;
         ProgressBar progressBarSpinner;
         LinearLayout mainNewsLayout;
+        string userLogged;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -28,10 +28,10 @@ namespace Project
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            myView = inflater.Inflate(Resource.Layout.FragMainNewsLayout, container, false);
+            myView = inflater.Inflate(Resource.Layout.FragFavNewsLayout, container, false);
 
-            userLogged = Util.getPref(myView.Context, "userLogged");
             Util.setPref(myView.Context, "currentFragment", this.GetType().Name);
+            userLogged = Util.getPref(myView.Context, "userLogged");
 
             newsListView = myView.FindViewById<ListView>(Resource.Id.listViewHomeNews);
             newsSearchView = myView.FindViewById<SearchView>(Resource.Id.searchViewHomeNews);
@@ -55,8 +55,7 @@ namespace Project
                     searchArray.Add(item);
 
             }
-            var searchAdapter = new NewsListAdapter(this.Context, searchArray);
-            newsListView.Adapter = searchAdapter;
+            newsListView.Adapter = new NewsListAdapter(this.Context, searchArray);
         }
 
         private void getNewsDB()
@@ -66,7 +65,6 @@ namespace Project
                 DBHelper myDB = new DBHelper(myView.Context);
                 string[] fields = { "TITLE", "NEWSURL", "IMAGEURL" };
                 ICursor result = myDB.selectStm("NEWS", fields, new Dictionary<string, string> { { "EMAIL", userLogged} });
-
                 while (!result.IsAfterLast)
                 {
                     var news = new News();
@@ -74,11 +72,10 @@ namespace Project
                     news.url = result.GetString(1);
                     news.urlToImage = result.GetString(2);
                     newsList.Add(news);
+
                     result.MoveToNext();
                 }
-                var myAdapter = new NewsListAdapter(this.Context, newsList);
-                newsListView.Adapter = myAdapter;
-                
+                newsListView.Adapter = new NewsListAdapter(this.Context, newsList);
             }
             catch (Exception ex)
             {

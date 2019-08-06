@@ -46,7 +46,7 @@ namespace Project
             {
                 if (regUser())
                 {
-                    myDialog = util.CreateButton(this, "Confirmation", "Thank you!\nYou've been registered");
+                    Toast.MakeText(this, "User registered", ToastLength.Long).Show();
                     Intent mainPage = new Intent(this, typeof(MainActivity));
                     StartActivity(mainPage);
                 }
@@ -66,6 +66,7 @@ namespace Project
             {
                 Dialog myDialog = util.CreateButton(this, "Attention", "Email already registered.\nDo login or try another email");
                 myDialog.Show();
+
                 return false;
             }
             else
@@ -79,6 +80,7 @@ namespace Project
                     { "PHONE", phone.Text }
                 };
                 myDB.insertSQL(userInfo, "USERS");
+
                 return true;
             }
         }

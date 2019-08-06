@@ -59,15 +59,14 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FragFavNews.cs" />
-    <Compile Include="FragMainNews.cs" />
-    <Compile Include="FragUserInfo.cs" />
+    <Compile Include="Fragments\FragFavNews.cs" />
+    <Compile Include="Fragments\FragMainNews.cs" />
+    <Compile Include="Fragments\FragUserInfo.cs" />
     <Compile Include="MainPage.cs" />
     <Compile Include="Adapters\NewsListAdapter.cs" />
     <Compile Include="Api\ApiNewsResponse.cs" />
     <Compile Include="Api\INewsApi.cs" />
     <Compile Include="DBHelper.cs" />
-    <Compile Include="Home.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Model\News.cs" />
     <Compile Include="Register.cs" />
@@ -121,11 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\news_custom_list.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\home.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

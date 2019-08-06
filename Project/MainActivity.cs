@@ -38,7 +38,11 @@ namespace Project
             };
         }
 
-       
+        public override void OnBackPressed()
+        {
+            StartActivity(new Intent(this, typeof(MainActivity)));
+        }
+
         private void ButtonClick(object sender, System.EventArgs e)
         {
             Dialog myDialog;

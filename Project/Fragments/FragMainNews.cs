@@ -35,13 +35,15 @@ namespace Project
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             myView = inflater.Inflate(Resource.Layout.FragMainNewsLayout, container, false);
-            userLogged = Util.getPref(myView.Context, "userLogged");
+
             Util.setPref(myView.Context, "currentFragment", this.GetType().Name);
+            userLogged = Util.getPref(myView.Context, "userLogged");
 
             newsListView = myView.FindViewById<ListView>(Resource.Id.listViewHomeNews);
             newsSearchView = myView.FindViewById<SearchView>(Resource.Id.searchViewHomeNews);
@@ -71,8 +73,7 @@ namespace Project
                     searchArray.Add(item);
 
             }
-            var searchAdapter = new NewsListAdapter(this.Context, searchArray);
-            newsListView.Adapter = searchAdapter;
+            newsListView.Adapter = new NewsListAdapter(this.Context, searchArray);
         }
         private async Task getNewsAsync()
         {
@@ -80,8 +81,7 @@ namespace Project
             {
                 ApiNewsResponse response = await newsApi.GetNews();
                 newsList = response.articles;
-                var myAdapter = new NewsListAdapter(this.Context, newsList);
-                newsListView.Adapter = myAdapter;
+                newsListView.Adapter = new NewsListAdapter(this.Context, newsList);
                 progressBarSpinner.Visibility = ViewStates.Invisible;
                 mainNewsLayout.RemoveView(progressBarSpinner);
             }

@@ -28,8 +28,9 @@ namespace Project
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             myView = inflater.Inflate(Resource.Layout.FragUserInfoLayout, container, false);
-            userLogged = Util.getPref(myView.Context, "userLogged");
+
             Util.setPref(myView.Context, "currentFragment", this.GetType().Name);
+            userLogged = Util.getPref(myView.Context, "userLogged");
 
             userInfo();
 
@@ -37,6 +38,17 @@ namespace Project
             updateButton.Click += ButtonClick;
 
             return myView;
+        }
+
+        protected void userInfo()
+        {
+            var userView = getUserView();
+            ICursor result = getUserInfo();
+
+            userView["name"].Text = result.GetString(0);
+            userView["age"].Text = result.GetString(1);
+            userView["phone"].Text = result.GetString(2);
+            userView["password"].Text = result.GetString(3);
         }
 
         private void ButtonClick(object sender, System.EventArgs e)
@@ -54,18 +66,12 @@ namespace Project
                     myDialog = util.CreateButton(myView.Context, "Attention", "All fields must be filled");
                     myDialog.Show();
                 }
-                //else if (!validatePassword())
-                //{
-                //    myDialog = util.CreateButton(myView.Context, "Attention", "Passwords don't match");
-                //    myDialog.Show();
-                //}
                 else
                 {
                     updateUser();
-                    myDialog = util.CreateButton(myView.Context, "Confirmation", "Your information has been updated.");
-                    myDialog.Show();
                     userInfo();
                     changeVisibility(false);
+                    Toast.MakeText(myView.Context, "Your information has been updated", ToastLength.Long).Show();
                 }
             }
         }
@@ -88,6 +94,7 @@ namespace Project
 
             return userView;
         }
+
         protected ICursor getUserInfo()
         {
             DBHelper myDB = new DBHelper(myView.Context);
@@ -113,17 +120,6 @@ namespace Project
                 };
             DBHelper myDB = new DBHelper(myView.Context);
             myDB.updateSQL(userViewStr, "USERS",whereClause);
-        }
-
-        protected void userInfo()
-        {
-            var userView = getUserView();
-            ICursor result = getUserInfo();
-
-            userView["name"].Text = result.GetString(0);
-            userView["age"].Text = result.GetString(1);
-            userView["phone"].Text = result.GetString(2);
-            userView["password"].Text = result.GetString(3);
         }
 
         private void changeVisibility(bool value)
