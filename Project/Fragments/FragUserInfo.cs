@@ -67,11 +67,6 @@ namespace Project
                     myDialog = util.CreateButton(myView.Context, "Attention", "All fields must be filled");
                     myDialog.Show();
                 }
-                else if (!Util.validateEmail(myView.FindViewById<EditText>(Resource.Id.TxtEmail).Text))
-                {
-                    myDialog = util.CreateButton(this.Context, "Attention", "Invalid email format");
-                    myDialog.Show();
-                }
                 else if (!Util.strIsPositiveNumber(myView.FindViewById<EditText>(Resource.Id.TxtAge).Text))
                 {
                     myDialog = util.CreateButton(this.Context, "Attention", "Age accept only positive numbers");
