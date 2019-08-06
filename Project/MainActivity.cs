@@ -4,15 +4,7 @@ using Android.Support.V7.App;
 using Android.Runtime;
 using Android.Widget;
 using Android.Views;
-using Refit;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
-using System;
-using Project.Model;
-using Project.Api;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Android.Content;
 
 
@@ -21,7 +13,6 @@ namespace Project
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-
         EditText username;
         EditText password;
         Button login;
@@ -32,7 +23,6 @@ namespace Project
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-
             SetContentView(Resource.Layout.activity_main);
 
             username = FindViewById<EditText>(Resource.Id.UserName);
@@ -65,11 +55,8 @@ namespace Project
         }
         protected void logUser()
         {
-            EditText username = FindViewById<EditText>(Resource.Id.UserName);
-            EditText password = FindViewById<EditText>(Resource.Id.Password);
-
             DBHelper myDB = new DBHelper(this);
-            if (!myDB.checkLogin(username.Text, password.Text))
+            if (!myDB.checkIfExist("USERS", new Dictionary<string, string>{{ "EMAIL", username.Text },{ "PASSWORD", password.Text }}))
             {
                 Dialog myDialog = util.CreateButton(this, "Attention", "User name and password incorrect.\nTry again or create a new account.");
                 myDialog.Show();
@@ -77,23 +64,14 @@ namespace Project
             else
             {
                 Intent mainPage = new Intent(this, typeof(MainPage));
-                util.setPref(this, "userLogged", username.Text);
+                Util.setPref(this, "userLogged", username.Text);
                 StartActivity(mainPage);
             }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
-        //private void buttongGetEventAsync(object sender, EventArgs e)
-        //{
-        //    Intent home = new Intent(this, typeof(Home));
-        //    StartActivity(home);
-            
-        //}
-        
     }
 }

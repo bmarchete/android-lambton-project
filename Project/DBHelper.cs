@@ -89,7 +89,7 @@ namespace Project
             {
                 if (count < whereClause.Count - 1)
                 {
-                    updateStr += i.Key + " = '" + i.Value + "'" + ", ";
+                    updateStr += i.Key + " = '" + i.Value + "'" + " AND ";
                     count++;
                 }
                 else
@@ -103,33 +103,41 @@ namespace Project
 
         public void deleteSQL(string table, Dictionary<string, string> whereClause)
         {
-            string updateStr = "DELETE FROM " + table + " WHERE ";
+            string selectStm = "DELETE FROM " + table + " WHERE ";
             int count = 0;
             foreach (var i in whereClause)
             {
                 if (count < whereClause.Count - 1)
                 {
-                    updateStr += i.Key + " = '" + i.Value + "'" + ", ";
+                    selectStm += i.Key + " = '" + i.Value + "'" + " AND ";
                     count++;
                 }
                 else
                 {
-                    updateStr += i.Key + " = '" + i.Value + "'";
+                    selectStm += i.Key + " = '" + i.Value + "'";
                 }
             }
-            System.Console.WriteLine(updateStr);
-            myDBObj.ExecSQL(updateStr);
+            System.Console.WriteLine(selectStm);
+            myDBObj.ExecSQL(selectStm);
         }
 
-        public bool checkEmailIDExisit(string email)
+        public bool checkIfExist(string table, Dictionary<string, string> whereClause)
         {
-            string selectStm = "Select EMAIL from USERS where EMAIL=" + "'" + email + "'";
-            return checkStatement(selectStm);
-        }
-
-        public bool checkLogin(string username, string password)
-        {
-            string selectStm = "Select EMAIL from USERS where EMAIL=" + "'" + username + "' and PASSWORD = '" + password + "'";
+            string selectStm = "SELECT 1 FROM " + table + " WHERE ";
+            int count = 0;
+            foreach (var i in whereClause)
+            {
+                if (count < whereClause.Count - 1)
+                {
+                    selectStm += i.Key + " = '" + i.Value + "'" + " AND ";
+                    count++;
+                }
+                else
+                {
+                    selectStm += i.Key + " = '" + i.Value + "'";
+                }
+            }
+            System.Console.WriteLine(selectStm);
             return checkStatement(selectStm);
         }
 
@@ -142,15 +150,40 @@ namespace Project
                 return false;
         }
 
-        public ICursor selectUser(string email)
+        public ICursor selectStm(string table, string[] tableFields, Dictionary<string, string> whereClause)
         {
-            string selectStm = "Select NAME, AGE, PHONE, PASSWORD from USERS where EMAIL=" + "'" + email + "'";
-            return returnStatement(selectStm);
-        }
-
-        public ICursor selectAllUsers()
-        {
-            string selectStm = "Select EMAIL, PASSWORD, NAME, AGE, PHONE from USERS";
+            string selectStm = "SELECT ";
+            int count = 0;
+            foreach (var i in tableFields)
+            {
+                if (count < tableFields.Length - 1)
+                {
+                    selectStm += i + ", ";
+                    count++;
+                }
+                else
+                {
+                    selectStm += i + " ";
+                }
+            }
+            selectStm += "FROM " + table;
+            if(whereClause.Count > 0)
+            {
+                selectStm += " WHERE ";
+                foreach (var i in whereClause)
+                {
+                    if (count < whereClause.Count - 1)
+                    {
+                        selectStm += i.Key + " = '" + i.Value + "'" + " AND ";
+                        count++;
+                    }
+                    else
+                    {
+                        selectStm += i.Key + " = '" + i.Value + "'";
+                    }
+                }
+            }
+            System.Console.WriteLine(selectStm);
             return returnStatement(selectStm);
         }
 

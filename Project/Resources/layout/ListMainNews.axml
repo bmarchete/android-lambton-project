@@ -63,7 +63,7 @@
             
             <Button
 			    android:id="@+id/BtnFavNews"
-			    android:text="Fav"
+			    android:text="SAVE"
 			    android:background="#7AC5CD"
 			    android:textColor="#FFFFFF"
 			    android:layout_width="60dp"

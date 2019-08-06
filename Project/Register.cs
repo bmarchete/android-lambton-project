@@ -51,7 +51,6 @@ namespace Project
                     StartActivity(mainPage);
                 }
             }
-
         }
 
         protected bool regUser()
@@ -63,7 +62,7 @@ namespace Project
             EditText phone = FindViewById<EditText>(Resource.Id.TxtPhone);
 
             DBHelper myDB = new DBHelper(this);
-            if (myDB.checkEmailIDExisit(email.Text))
+            if(myDB.checkIfExist("USERS", new Dictionary<string, string> { { "EMAIL", email.Text } }))
             {
                 Dialog myDialog = util.CreateButton(this, "Attention", "Email already registered.\nDo login or try another email");
                 myDialog.Show();

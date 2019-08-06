@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 
 using Android.App;
 using Android.Content;
@@ -39,7 +37,6 @@ namespace Project.Adapters
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var view = convertView;
-
             NewsListAdapterViewHolder holder = null;
 
             if (view != null)
@@ -51,61 +48,47 @@ namespace Project.Adapters
 
                 News news = newsList[position];
 
-                holder = new NewsListAdapterViewHolder();
+                holder = new NewsListAdapterViewHolder(context);
                 var inflater = context.GetSystemService(Context.LayoutInflaterService).JavaCast<LayoutInflater>();
 
-                //replace with your item and your holder items
-                //comment back in
-                view = inflater.Inflate(Resource.Layout.ListMainNews, parent, false);
-                //holder.Code = view.FindViewById<TextView>(Resource.Id.textViewCourseCode);
-                //holder.Name = view.FindViewById<TextView>(Resource.Id.textViewCourseName);
-                //holder.Thumbnail = view.FindViewById<ImageView>(Resource.Id.imageViewCourse);
-
-
-                //holder.Code.Text = course.Code;
-                //holder.Name.Text = course.Name;
-                //holder.Thumbnail.SetImageResource(course.Thumbnail);
+                if(Util.getPref(this.context, "currentFragment").Equals("FragMainNews"))
+                {
+                    view = inflater.Inflate(Resource.Layout.ListMainNews, parent, false);
+                }
+                else
+                {
+                    view = inflater.Inflate(Resource.Layout.ListFavNews, parent, false);
+                }
 
                 holder.Title = view.FindViewById<TextView>(Resource.Id.txtTitle);
-                //holder.NewsURL = view.FindViewById<TextView>(Resource.Id.TxtNewsURL);
                 holder.ImageURL = view.FindViewById<TextView>(Resource.Id.TxtImageURL);
                 holder.BtnFavNews = view.FindViewById<Button>(Resource.Id.BtnFavNews);
                 holder.BtnOpenNews = view.FindViewById<Button>(Resource.Id.BtnOpenNews);
-                //holder.Description = view.FindViewById<TextView>(Resource.Id.textViewDescription);
-                //holder.Description = view.FindViewById<TextView>(Resource.Id.textViewMore);
                 holder.Thumbnail = view.FindViewById<ImageView>(Resource.Id.imageView);
-
+                //holder.Description = view.FindViewById<TextView>(Resource.Id.textViewDescription);
+                //holder.NewsURL = view.FindViewById<TextView>(Resource.Id.TxtNewsURL);
 
                 holder.Title.Text = news.title;
                 holder.NewsURL = news.url;
                 holder.ImageURL.Text = news.urlToImage;
+                //holder.Description.Text = news.description;
                 holder.BtnFavNews.Click += (sender, args) => {
-                    holder.addToFavorite();
+                    holder.btnFavorite();
                 };
                 holder.BtnOpenNews.Click += (sender, args) => {
                     holder.openWebVIew(this.context);
                 };
-
-                //holder.Description.Text = news.description;
-                //holder.Description.Text = news.description;
-
                 var imageBitmap = GetImageBitmapFromUrl(news.urlToImage);
                 holder.Thumbnail.SetImageBitmap(imageBitmap);
+
                 view.Tag = holder;
             }
-
-
-
-
             return view;
         }
-
-        
 
         private Bitmap GetImageBitmapFromUrl(string url)
         {
             Bitmap imageBitmap = null;
-
             using (var webClient = new WebClient())
             {
                 var imageBytes = webClient.DownloadData(url);
@@ -114,11 +97,9 @@ namespace Project.Adapters
                     imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
                 }
             }
-
             return imageBitmap;
         }
 
-        //Fill in cound here, currently 0
         public override int Count
         {
             get
@@ -126,8 +107,6 @@ namespace Project.Adapters
                 return this.newsList.Count;
             }
         }
-
-       
 
         public override News this[int position]
         {
@@ -140,6 +119,12 @@ namespace Project.Adapters
 
     class NewsListAdapterViewHolder : Java.Lang.Object
     {
+        private Context context;
+
+        public NewsListAdapterViewHolder(Context context)
+        {
+            this.context = context;
+        }
 
         public TextView Title { get; set; }
         public string NewsURL { get; set; }
@@ -150,12 +135,33 @@ namespace Project.Adapters
         public Button BtnFavNews { get; set; }
         public Button BtnOpenNews { get; set; }
 
-
-        public void addToFavorite()
+        public void btnFavorite()
         {
-            // Here you can create a new DB intance and save the info 
-
-            Toast.MakeText(Application.Context, "title: " + Title.Text, ToastLength.Short).Show();
+            DBHelper myDB = new DBHelper(this.context);
+            if(Util.getPref(this.context, "currentFragment").Equals("FragFavNews"))
+            {
+                myDB.deleteSQL("NEWS", new Dictionary<string, string>{{ "EMAIL", Util.getPref(context, "userLogged") },{ "NEWSURL", NewsURL }});
+                Toast.MakeText(Application.Context, "News deleted!", ToastLength.Short).Show();
+            }
+            else
+            {
+                if (myDB.checkIfExist("NEWS", new Dictionary<string, string> { { "EMAIL", Util.getPref(context, "userLogged") }, { "NEWSURL", NewsURL } }))
+                {
+                    Toast.MakeText(Application.Context, "News already saved!", ToastLength.Short).Show();
+                }
+                else
+                {
+                    var newsInfo = new Dictionary<string, string>
+                    {
+                        { "EMAIL", Util.getPref(context, "userLogged")},
+                        { "TITLE", Title.Text },
+                        { "NEWSURL", NewsURL },
+                        { "IMAGEURL", ImageURL.Text }
+                    };
+                    myDB.insertSQL(newsInfo, "NEWS");
+                    Toast.MakeText(Application.Context, "News saved!", ToastLength.Short).Show();
+                }
+            }
         }
 
         public void openWebVIew(Context context)

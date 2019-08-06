@@ -28,9 +28,6 @@ namespace Project
         List<News> newsList = new List<News>();
         INewsApi newsApi;
         View myView;
-        Button favNewsBtn;
-        Button openNewsBtn;
-        Util util = new Util();
         string userLogged;
         ProgressBar progressBarSpinner;
         LinearLayout mainNewsLayout;
@@ -38,20 +35,18 @@ namespace Project
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             myView = inflater.Inflate(Resource.Layout.FragMainNewsLayout, container, false);
-            userLogged = util.getPref(myView.Context, "userLogged");
+            userLogged = Util.getPref(myView.Context, "userLogged");
+            Util.setPref(myView.Context, "currentFragment", this.GetType().Name);
 
             newsListView = myView.FindViewById<ListView>(Resource.Id.listViewHomeNews);
             newsSearchView = myView.FindViewById<SearchView>(Resource.Id.searchViewHomeNews);
             progressBarSpinner = myView.FindViewById<ProgressBar>(Resource.Id.progressBar1);
             mainNewsLayout = myView.FindViewById<LinearLayout>(Resource.Id.mainNewsLayout);
-
-            //spinner.Progress
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
             {
@@ -61,13 +56,23 @@ namespace Project
 
             newsApi = RestService.For<INewsApi>("https://android-lambton-api.herokuapp.com");
             newsSearchView.QueryTextChange += MySearchView_QueryTextChange;
+            newsList.Clear();
             getNewsAsync();
 
             return myView;
         }
         private void MySearchView_QueryTextChange(object sender, SearchView.QueryTextChangeEventArgs e)
         {
+            string searchedValue = e.NewText;
+            List<News> searchArray = new List<News>();
+            foreach (var item in newsList)
+            {
+                if (item.title.ToUpper().Contains(searchedValue.ToUpper()))
+                    searchArray.Add(item);
 
+            }
+            var searchAdapter = new NewsListAdapter(this.Context, searchArray);
+            newsListView.Adapter = searchAdapter;
         }
         private async Task getNewsAsync()
         {
@@ -84,27 +89,6 @@ namespace Project
             {
                 Toast.MakeText(this.Context, ex.StackTrace, ToastLength.Long).Show();
             }
-        }
-
-        private void favNewsBtnClick(object sender, System.EventArgs e)
-        {
-
-            
-            TextView title = myView.FindViewById<TextView>(Resource.Id.textViewTitle);
-            TextView newsURL = myView.FindViewById<TextView>(Resource.Id.TxtNewsURL);
-            TextView imageURL = myView.FindViewById<TextView>(Resource.Id.TxtImageURL);
-            
-            var favNews = new Dictionary<string, string>
-            {
-                { "EMAIL", userLogged},
-                { "TITLE", title.Text },
-                { "NEWSURL", newsURL.Text },
-                { "IMAGEURL", imageURL.Text }
-            };
-
-            DBHelper myDB = new DBHelper(myView.Context);
-            myDB.insertSQL(favNews, "NEWS");
-            
         }
     }
 }

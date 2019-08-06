@@ -1,33 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Project.Model;
+using Project.Adapters;
+using Android.Database;
 
 namespace Project
 {
     public class FragFavNews : Fragment
     {
+        SearchView newsSearchView;
+        ListView newsListView;
+        List<News> newsList = new List<News>();
+        View myView;
+        string userLogged;
+        ProgressBar progressBarSpinner;
+        LinearLayout mainNewsLayout;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Create your fragment here
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
-            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
+            myView = inflater.Inflate(Resource.Layout.FragMainNewsLayout, container, false);
 
-            return base.OnCreateView(inflater, container, savedInstanceState);
+            userLogged = Util.getPref(myView.Context, "userLogged");
+            Util.setPref(myView.Context, "currentFragment", this.GetType().Name);
+
+            newsListView = myView.FindViewById<ListView>(Resource.Id.listViewHomeNews);
+            newsSearchView = myView.FindViewById<SearchView>(Resource.Id.searchViewHomeNews);
+            progressBarSpinner = myView.FindViewById<ProgressBar>(Resource.Id.progressBar1);
+            mainNewsLayout = myView.FindViewById<LinearLayout>(Resource.Id.mainNewsLayout);
+
+            newsSearchView.QueryTextChange += MySearchView_QueryTextChange;
+            newsList.Clear();
+            getNewsDB();
+            
+            return myView;
+        }
+
+        private void MySearchView_QueryTextChange(object sender, SearchView.QueryTextChangeEventArgs e)
+        {
+            string searchedValue = e.NewText;
+            List<News> searchArray = new List<News>();
+            foreach (var item in newsList)
+            {
+                if (item.title.ToUpper().Contains(searchedValue.ToUpper()))
+                    searchArray.Add(item);
+
+            }
+            var searchAdapter = new NewsListAdapter(this.Context, searchArray);
+            newsListView.Adapter = searchAdapter;
+        }
+
+        private void getNewsDB()
+        {
+            try
+            {
+                DBHelper myDB = new DBHelper(myView.Context);
+                string[] fields = { "TITLE", "NEWSURL", "IMAGEURL" };
+                ICursor result = myDB.selectStm("NEWS", fields, new Dictionary<string, string> { { "EMAIL", userLogged} });
+
+                while (!result.IsAfterLast)
+                {
+                    var news = new News();
+                    news.title = result.GetString(0);
+                    news.url = result.GetString(1);
+                    news.urlToImage = result.GetString(2);
+                    newsList.Add(news);
+                    result.MoveToNext();
+                }
+                var myAdapter = new NewsListAdapter(this.Context, newsList);
+                newsListView.Adapter = myAdapter;
+                
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this.Context, "No favorites to exhibit", ToastLength.Long).Show();
+            }
+            progressBarSpinner.Visibility = ViewStates.Invisible;
+            mainNewsLayout.RemoveView(progressBarSpinner);
         }
     }
 }

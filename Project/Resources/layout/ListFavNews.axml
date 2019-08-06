@@ -5,44 +5,34 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:orientation="horizontal"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp">
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="2dp">
             <ImageView
-                android:src="@android:drawable/ic_menu_gallery"
-                android:id="@+id/PostAvatar"
+                android:id="@+id/imageView"
+                android:background="@color/material_blue_grey_800"
                 android:scaleType="fitXY"
                 android:layout_width="48dp"
                 android:layout_height="48dp" />
-            <TextView
-                android:text="Text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/AuthorName"
-                android:textSize="8sp"
-                android:gravity="center"
-                android:textColor="#ff5a5a5a"
-                android:layout_marginTop="2dp" />
         </LinearLayout>
         <TextView
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras semper est ligula. Nullam nec felis magna. Phasellus nulla quam, tempus eget lobortis a, gravida vitae enim. Vivamus quis odio sed mauris semper accumsan. Maecenas ac massa pulvinar lorem rhoncus imperdiet ac nec lectus."
+            android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/PostText"
             android:layout_weight="1"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
@@ -54,31 +44,40 @@
             android:requiresFadingEdge="vertical"
             android:fadingEdgeLength="3dp"
             android:fontFamily="sans-serif-condensed" />
+        <TextView
+            android:id="@+id/TxtNewsURL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+        <TextView
+            android:id="@+id/TxtImageURL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2"
             android:layout_gravity="center">
-            <TextView
-                android:text="20 min"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/PostTime"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="#ff2d2d2d" />
-            <TextView
-                android:text="ago"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/PostTimeSecondary"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:textColor="#ff2d2d2d" />
+            
+            <Button
+			    android:id="@+id/BtnFavNews"
+			    android:text="DELETE"
+			    android:background="#7AC5CD"
+			    android:textColor="#FFFFFF"
+			    android:layout_width="60dp"
+			    android:layout_height="25dp"
+			    android:layout_marginBottom="10dp"
+		    />
+            <Button
+			    android:id="@+id/BtnOpenNews"
+			    android:text="More..."
+			    android:background="#7AC5CD"
+			    android:textColor="#FFFFFF"
+			    android:layout_width="60dp"
+			    android:layout_height="25dp"
+		    />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -44,8 +44,7 @@ namespace Project
             {
                 case Resource.Id.logout:
                     {
-                        var util = new Util();
-                        util.setPref(this, "userLogged", "");
+                        Util.setPref(this, "userLogged", "");
                         Intent loginPage = new Intent(this, typeof(MainActivity));
                         StartActivity(loginPage);
                         return true;

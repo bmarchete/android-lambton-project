@@ -44,23 +44,20 @@ namespace Project
             System.Console.WriteLine("Cancel Button Cliked");
         }
 
-        public void setPref(Context context,string key, string value)
+        public static void setPref(Context context,string key, string value)
         {
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(context);
             ISharedPreferencesEditor editor = prefs.Edit();
             editor.PutString(key, value);
-            // editor.Commit();    // applies changes synchronously on older APIs
-            editor.Apply();        // applies changes asynchronously on newer APIs
+            editor.Apply();
         }
 
-        public string getPref(Context context, string key)
+        public static string getPref(Context context, string key)
         {
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(context);
             string mString = prefs.GetString(key, "");
 
             return mString;
         }
-
-
     }
 }

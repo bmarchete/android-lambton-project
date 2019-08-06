@@ -8,7 +8,6 @@ using Android.Content;
 using Android.Database;
 using Android.OS;
 using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 
@@ -20,7 +19,6 @@ namespace Project
         bool updateDisplay = false;
         Button updateButton;
         View myView;
-        Util util = new Util();
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -30,7 +28,8 @@ namespace Project
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             myView = inflater.Inflate(Resource.Layout.FragUserInfoLayout, container, false);
-            userLogged = util.getPref(myView.Context, "userLogged");
+            userLogged = Util.getPref(myView.Context, "userLogged");
+            Util.setPref(myView.Context, "currentFragment", this.GetType().Name);
 
             userInfo();
 
@@ -92,7 +91,8 @@ namespace Project
         protected ICursor getUserInfo()
         {
             DBHelper myDB = new DBHelper(myView.Context);
-            ICursor result = myDB.selectUser(userLogged);
+            string[] fields = { "NAME", "AGE", "PHONE", "PASSWORD" };
+            ICursor result = myDB.selectStm("USERS", fields, new Dictionary<string, string> { { "EMAIL", userLogged } });
 
             return result;
         }
