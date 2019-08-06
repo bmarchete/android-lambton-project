@@ -126,7 +126,7 @@
 			android:id="@+id/BtnLogin"
 			android:background="#595959"
 			android:textColor="#FFFFFF"
-			android:layout_width="180dp"
+			android:layout_width="300dp"
 			android:layout_height="40dp"
 			android:text="Login"
 		/>

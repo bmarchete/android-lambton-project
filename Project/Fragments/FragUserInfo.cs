@@ -6,6 +6,7 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.Database;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -64,6 +65,16 @@ namespace Project
                 if (!util.ValidateTextFields(form))
                 {
                     myDialog = util.CreateButton(myView.Context, "Attention", "All fields must be filled");
+                    myDialog.Show();
+                }
+                else if (!Util.validateEmail(myView.FindViewById<EditText>(Resource.Id.TxtEmail).Text))
+                {
+                    myDialog = util.CreateButton(this.Context, "Attention", "Invalid email format");
+                    myDialog.Show();
+                }
+                else if (!Util.strIsPositiveNumber(myView.FindViewById<EditText>(Resource.Id.TxtAge).Text))
+                {
+                    myDialog = util.CreateButton(this.Context, "Attention", "Age accept only positive numbers");
                     myDialog.Show();
                 }
                 else
@@ -127,19 +138,23 @@ namespace Project
             var userView = getUserView();
             if (value)
             {
-                userView["name"].Enabled = true;
-                userView["age"].Enabled = true;
-                userView["phone"].Enabled = true;
-                userView["password"].Enabled = true;
+                foreach(var field in userView)
+                {
+                    field.Value.Enabled = true;
+                    field.Value.SetBackgroundColor(Color.ParseColor("#FFFFFF"));
+                    field.Value.SetTextColor(Color.ParseColor("#000000"));
+                }
                 updateButton.Text = "Save";
                 updateDisplay = true;
             }
             else
             {
-                userView["name"].Enabled = false;
-                userView["age"].Enabled = false;
-                userView["phone"].Enabled = false;
-                userView["password"].Enabled = false;
+                foreach (var field in userView)
+                {
+                    field.Value.Enabled = false;
+                    field.Value.SetBackgroundColor(Color.Transparent);
+                    field.Value.SetTextColor(Color.ParseColor("#FFFFFF"));
+                }
                 updateButton.Text = "Update";
                 updateDisplay = false;
             }

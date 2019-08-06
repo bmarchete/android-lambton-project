@@ -59,5 +59,29 @@ namespace Project
 
             return mString;
         }
+
+        public static bool validateEmail(string strEmail)
+        {
+            string strModelo = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
+            if (System.Text.RegularExpressions.Regex.IsMatch(strEmail, strModelo))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool strIsPositiveNumber(string strNumber)
+        {
+            int i = 0;
+            bool result = int.TryParse(strNumber, out i);
+            if (result)
+            {
+                return i >= 0 ? true : false;
+            }
+            return false;
+        }
     }
 }
