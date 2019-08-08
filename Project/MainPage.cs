@@ -1,8 +1,10 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Database;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Views;
+using System.Collections.Generic;
 
 namespace Project
 {
@@ -29,6 +31,18 @@ namespace Project
             AddTabToActionBar("News"); //First Tab
             AddTabToActionBar("Favorites") ; //Second Tab
             AddTabToActionBar("User Info"); //Second Tab
+
+            welcomePopup();
+        }
+
+        private void welcomePopup()
+        {
+            DBHelper myDB = new DBHelper(this);
+            string userLogged = Util.getPref(this, "userLogged");
+            string[] fields = { "NAME" };
+            ICursor result = myDB.selectStm("USERS", fields, new Dictionary<string, string> { { "EMAIL", userLogged } });
+            Dialog myDialog = new Util().CreateButton(this, "MyNews", "Welcome "+ result.GetString(0));
+            myDialog.Show();
         }
 
         void AddTabToActionBar(string tabTitle)
